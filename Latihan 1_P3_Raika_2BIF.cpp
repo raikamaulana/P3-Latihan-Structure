@@ -232,20 +232,20 @@ int main(){
                         nilai_h_uts = 'A';
                         nilai_h_uas = 'A';
                     } else if ((nilai_akhir > 70 && nilai_akhir <= 80) ||
-                               (nilai_absen > 70 && nilai_absen <= 80) ||
-                               (nilai_tugas > 70 && nilai_tugas <= 80) ||
-                               (nilai_uts > 70 && nilai_uts <= 80) ||
-                               (nilai_uas > 70 && nilai_uas <= 80)) {
+                        (nilai_absen > 70 && nilai_absen <= 80) ||
+                        (nilai_tugas > 70 && nilai_tugas <= 80) ||
+                        (nilai_uts > 70 && nilai_uts <= 80) ||
+                        (nilai_uas > 70 && nilai_uas <= 80)) {
                         nilai_huruf = 'B';
                         nilai_h_absen = 'B';
                         nilai_h_tugas = 'B';
                         nilai_h_uts = 'B';
                         nilai_h_uas = 'B';
                     } else if ((nilai_akhir > 60 && nilai_akhir <= 70) ||
-                               (nilai_absen > 60 && nilai_absen <= 70) ||
-                               (nilai_tugas > 60 && nilai_tugas <= 70) ||
-                               (nilai_uts > 60 && nilai_uts <= 70) ||
-                               (nilai_uas > 60 && nilai_uas <= 70)) {
+                        (nilai_absen > 60 && nilai_absen <= 70) ||
+                        (nilai_tugas > 60 && nilai_tugas <= 70) ||
+                        (nilai_uts > 60 && nilai_uts <= 70) ||
+                        (nilai_uas > 60 && nilai_uas <= 70)) {
                         nilai_huruf = 'C';
                         nilai_h_absen = 'C';
                         nilai_h_tugas = 'C';
@@ -262,7 +262,7 @@ int main(){
                     mhs[jumlah_data].nama = nama;
                     mhs[jumlah_data].NPM = npm;
                     mhs[jumlah_data].nilai = {nilai_absen, nilai_tugas, nilai_uts, nilai_uas, nilai_akhir, nilai_huruf,
-                                              nilai_h_absen, nilai_h_tugas, nilai_h_uts, nilai_h_uas};
+                    nilai_h_absen, nilai_h_tugas, nilai_h_uts, nilai_h_uas};
 
                     cout << "\nBerhasil menambahkan mahasiswa '"<< nama <<"'!" << endl << endl;
                     do {
@@ -292,7 +292,6 @@ int main(){
                         cout << "||  Ketik '0' untuk kembali ke menu utama :\n  => ";
                     }
                 } while (exit != '0');
-
                 backToMainMenu = true;
                 system("cls");
                 break;
@@ -589,147 +588,149 @@ int main(){
                 system("cls");
                 break;
             case 4:
-                for (int i = 0; i < size; i++){
-                    if (mhs[i].NPM == "" && i == 0){
-                        system("cls");
-                        headerHapusMhs();
-                        cout << "||  Belum ada Mahasiswa yang ditambahkan." << endl << endl;
-                        cout << "||  Ketik '0' untuk kembali ke menu utama :\n  => ";
-                        do {
-                            cin >> exit;
-                            if (exit != '0'){
+                do {
+                    do {
+                        for (int i = 0; i < size; i++){
+                            if (mhs[i].NPM == "" && i == 0){
                                 system("cls");
                                 headerHapusMhs();
-                                tampilDataMahasiswa(mhs, size);
-                                cout << "Input harus '0'!" << endl;
+                                cout << "||  Belum ada Mahasiswa yang ditambahkan." << endl << endl;
                                 cout << "||  Ketik '0' untuk kembali ke menu utama :\n  => ";
+                                do {
+                                    cin >> exit;
+                                    if (exit != '0'){
+                                        system("cls");
+                                        headerHapusMhs();
+                                        tampilDataMahasiswa(mhs, size);
+                                        cout << "Input harus '0'!" << endl;
+                                        cout << "||  Ketik '0' untuk kembali ke menu utama :\n  => ";
+                                    }
+                                } while (exit != '0');
+                                if (exit == '0'){
+                                    backToMainMenu = true;
+                                    system("cls");
+                                    break;
+                                }
                             }
-                        } while (exit != '0');
-
-                        backToMainMenu = true;
+                        }
                         system("cls");
+                        headerHapusMhs();
+                        tidakDitemukan = false;
+                        do {
+                            cout << "||  Cari Mahasiswa Berdasarkan NPM     :\n  => ";
+                            cin >> npm;
+                            if (npm == ""){
+                                system("cls");
+                                headerHapusMhs();
+                                cout << "Input kosong. Mohon input NPM kembali." << endl;
+                            }
+                        } while (npm == "");
+                        if (npm == "0"){
+                            system("cls");
+                            backToMainMenu = true;
+                            break;
+                        }
+                        for (int i = 0; i < size; i++){
+                            if (npm == mhs[i].NPM){
+                                index = i;
+                                nama = mhs[index].nama;
+                                cout << endl << "  Data Mahasiswa " << npm << " Ditemukan!" << endl;
+                                tidakDitemukan = true;
+                                yesorno = 'y';
+                            }
+                        }
+                        if (tidakDitemukan == false){
+                            cout << endl << "Data Mahasiswa " << npm << " Tidak Ada!" << endl;
+                            cout << "||  Ingin mencari lagi? (y/n) :\n  => ";
+                            cin >> yesorno;
+                        }
+                    } while (tidakDitemukan == false && (yesorno == 'Y' || yesorno == 'y'));
+                    if (yesorno == 'N' || yesorno == 'n'){
+                        system("cls");
+                        backToMainMenu = true;
                         break;
                     }
+
+                    for (int i = 0; i < 10; i++){
+                        if (npm == mhs[i].NPM){
+                            cout << endl;
+                            cout << "  Nama Mahasiswa : " << mhs[i].nama << endl;
+                            cout << "  NPM            : " << mhs[i].NPM << endl;
+                            cout << "  Nilai Absen    : " << mhs[i].nilai.nilai_absen << " - " << mhs[i].nilai.nilai_h_absen << endl;
+                            cout << "  Nilai Tugas    : " << mhs[i].nilai.nilai_tugas << " - " << mhs[i].nilai.nilai_h_tugas << endl;
+                            cout << "  Nilai UTS      : " << mhs[i].nilai.nilai_uts << " - " << mhs[i].nilai.nilai_h_uts << endl;
+                            cout << "  Nilai UAS      : " << mhs[i].nilai.nilai_uas << " - " << mhs[i].nilai.nilai_h_uas << endl;
+                            cout << "  Nilai Akhir    : " << mhs[i].nilai.nilai_akhir << " - " << mhs[i].nilai.nilai_huruf << endl;
+                        }
+                    }
+
                     do {
-                        do {
-                            system("cls");
-                            headerHapusMhs();
-                            tidakDitemukan = false;
-                            do {
-                                cout << "||  Cari Mahasiswa Berdasarkan NPM     :\n  => ";
-                                cin >> npm;
-                                if (npm == ""){
-                                    system("cls");
-                                    headerHapusMhs();
-                                    cout << "Input kosong. Mohon input NPM kembali." << endl;
-                                }
-                            } while (npm == "");
-                            if (npm == "0"){
-                                system("cls");
-                                backToMainMenu = true;
-                                break;
-                            }
-                            for (int i = 0; i < size; i++){
-                                if (npm == mhs[i].NPM){
-                                    index = i;
-                                    nama = mhs[index].nama;
-                                    cout << endl << "  Data Mahasiswa " << npm << " Ditemukan!" << endl;
-                                    tidakDitemukan = true;
-                                    yesorno = 'y';
-                                }
-                            }
-                            if (tidakDitemukan == false){
-                                cout << endl << "Data Mahasiswa " << npm << " Tidak Ada!" << endl;
-                                cout << "||  Ingin mencari lagi? (y/n) :\n  => ";
-                                cin >> yesorno;
-                            }
-                        } while (tidakDitemukan == false && (yesorno == 'Y' || yesorno == 'y'));
-                        if (yesorno == 'N' || yesorno == 'n'){
-                            system("cls");
-                            backToMainMenu = true;
-                            break;
+                        cout << endl << "||  Apakah anda yakin ingin menghapus data mahasiswa "<< mhs[index].nama <<"? (y/n) :\n  => ";
+                        cin >> yesorno;
+                        cin.ignore();
+                        if (yesorno != 'y' && yesorno != 'Y' && yesorno != 'n' && yesorno != 'N'){
+                            cout << endl << "Input tidak valid!" << endl;
+                        }
+                    } while (yesorno != 'y' && yesorno != 'Y' && yesorno != 'n' && yesorno != 'N');
+                    if (yesorno == '0'){
+                        system("cls");
+                        backToMainMenu = true;
+                        break;
+                    }
+                    if (yesorno == 'N' || yesorno == 'n'){
+                        system("cls");
+                        backToMainMenu = true;
+                        break;
+                    }
+                    if (yesorno == 'Y' || yesorno == 'y'){
+                        // Kosongkan elemen terakhir
+                        mhs[index].NPM = "";
+                        mhs[index].nama = "";
+                        mhs[index].nilai.nilai_absen = 0;
+                        mhs[index].nilai.nilai_tugas = 0;
+                        mhs[index].nilai.nilai_uts = 0;
+                        mhs[index].nilai.nilai_uas = 0;
+                        mhs[index].nilai.nilai_akhir = 0;
+                        mhs[index].nilai.nilai_huruf = 'D';
+                        mhs[index].nilai.nilai_h_absen = 'D';
+                        mhs[index].nilai.nilai_h_tugas = 'D';
+                        mhs[index].nilai.nilai_h_uts = 'D';
+                        mhs[index].nilai.nilai_h_uas = 'D';
+
+                        for (int i = index; i < jumlah_data; i++) {
+                            mhs[i] = mhs[i + 1];  // Geser semua elemen ke kiri
                         }
 
-                        for (int i = 0; i < 10; i++){
-                            if (npm == mhs[i].NPM){
-                                cout << endl;
-                                cout << "  Nama Mahasiswa : " << mhs[i].nama << endl;
-                                cout << "  NPM            : " << mhs[i].NPM << endl;
-                                cout << "  Nilai Absen    : " << mhs[i].nilai.nilai_absen << " - " << mhs[i].nilai.nilai_h_absen << endl;
-                                cout << "  Nilai Tugas    : " << mhs[i].nilai.nilai_tugas << " - " << mhs[i].nilai.nilai_h_tugas << endl;
-                                cout << "  Nilai UTS      : " << mhs[i].nilai.nilai_uts << " - " << mhs[i].nilai.nilai_h_uts << endl;
-                                cout << "  Nilai UAS      : " << mhs[i].nilai.nilai_uas << " - " << mhs[i].nilai.nilai_h_uas << endl;
-                                cout << "  Nilai Akhir    : " << mhs[i].nilai.nilai_akhir << " - " << mhs[i].nilai.nilai_huruf << endl;
-                            }
-                        }
+                        // Kosongkan elemen terakhir setelah pergeseran
+                        mhs[jumlah_data].NPM = "";
+                        mhs[jumlah_data].nama = "";
+                        mhs[jumlah_data].nilai.nilai_absen = 0;
+                        mhs[jumlah_data].nilai.nilai_tugas = 0;
+                        mhs[jumlah_data].nilai.nilai_uts = 0;
+                        mhs[jumlah_data].nilai.nilai_uas = 0;
+                        mhs[jumlah_data].nilai.nilai_akhir = 0;
+                        mhs[jumlah_data].nilai.nilai_huruf = 'D';
+                        mhs[jumlah_data].nilai.nilai_h_absen = 'D';
+                        mhs[jumlah_data].nilai.nilai_h_tugas = 'D';
+                        mhs[jumlah_data].nilai.nilai_h_uts = 'D';
+                        mhs[jumlah_data].nilai.nilai_h_uas = 'D';
+
+                        // Kurangi jumlah data
+                        jumlah_data--;
+
+                        cout << "\nBerhasil menghapus data mahasiswa '"<< nama <<"'!" << endl << endl;
 
                         do {
-                            cout << endl << "||  Apakah anda yakin ingin menghapus data mahasiswa "<< mhs[index].nama <<"? (y/n) :\n  => ";
+                            cout << endl << "||  Apakah ingin menghapus data kembali? (y/n):\n  => ";
                             cin >> yesorno;
-                            cin.ignore();
+
                             if (yesorno != 'y' && yesorno != 'Y' && yesorno != 'n' && yesorno != 'N'){
-                                cout << endl << "Input tidak valid!" << endl;
+                                cout << "Pilihan tidak valid! Mohon Input Kembali." << endl;
                             }
+                            cin.ignore();
                         } while (yesorno != 'y' && yesorno != 'Y' && yesorno != 'n' && yesorno != 'N');
-                        if (yesorno == '0'){
-                            system("cls");
-                            backToMainMenu = true;
-                            break;
-                        }
-                        if (yesorno == 'N' || yesorno == 'n'){
-                            system("cls");
-                            backToMainMenu = true;
-                            break;
-                        }
-                        if (yesorno == 'Y' || yesorno == 'y'){
-                            // Kosongkan elemen terakhir
-                            mhs[index].NPM = "";
-                            mhs[index].nama = "";
-                            mhs[index].nilai.nilai_absen = 0;
-                            mhs[index].nilai.nilai_tugas = 0;
-                            mhs[index].nilai.nilai_uts = 0;
-                            mhs[index].nilai.nilai_uas = 0;
-                            mhs[index].nilai.nilai_akhir = 0;
-                            mhs[index].nilai.nilai_huruf = 'D';
-                            mhs[index].nilai.nilai_h_absen = 'D';
-                            mhs[index].nilai.nilai_h_tugas = 'D';
-                            mhs[index].nilai.nilai_h_uts = 'D';
-                            mhs[index].nilai.nilai_h_uas = 'D';
-
-                            for (int i = index; i < jumlah_data; i++) {
-                                mhs[i].nama = mhs[i + 1].nama;
-                                mhs[i].NPM = mhs[i + 1].NPM;
-                                mhs[i].nilai.nilai_absen = mhs[i + 1].nilai.nilai_absen;
-                                mhs[i].nilai.nilai_tugas = mhs[i + 1].nilai.nilai_tugas;
-                                mhs[i].nilai.nilai_uts = mhs[i + 1].nilai.nilai_uts;
-                                mhs[i].nilai.nilai_uas = mhs[i + 1].nilai.nilai_uas;
-                                mhs[i].nilai.nilai_akhir = mhs[i + 1].nilai.nilai_akhir;
-                                mhs[i].nilai.nilai_huruf = mhs[i + 1].nilai.nilai_huruf;
-                                mhs[i].nilai.nilai_h_absen = mhs[i + 1].nilai.nilai_h_absen;
-                                mhs[i].nilai.nilai_h_tugas = mhs[i + 1].nilai.nilai_h_tugas;
-                                mhs[i].nilai.nilai_h_uts = mhs[i + 1].nilai.nilai_h_uts;
-                                mhs[i].nilai.nilai_h_uas = mhs[i + 1].nilai.nilai_h_uas;
-                            }
-
-                            jumlah_data--;
-
-                            cout << "\nBerhasil menghapus data mahasiswa '"<< nama <<"'!" << endl << endl;
-
-                            do {
-                                cout << endl << "||  Apakah ingin menghapus data kembali? (y/n):\n  => ";
-                                cin >> yesorno;
-
-                                if (yesorno != 'y' && yesorno != 'Y' && yesorno != 'n' && yesorno != 'N'){
-                                    cout << "Pilihan tidak valid! Mohon Input Kembali." << endl;
-                                }
-                                cin.ignore();
-                            } while (yesorno != 'y' && yesorno != 'Y' && yesorno != 'n' && yesorno != 'N');
-                        }
-                    } while (yesorno == 'y' || yesorno == 'Y');
-                    backToMainMenu = true;
-                    system("cls");
-                    break;
-                }
+                    }
+                } while (yesorno == 'y' || yesorno == 'Y');
                 backToMainMenu = true;
                 system("cls");
                 break;
@@ -743,6 +744,7 @@ int main(){
                 break;
         }
     } while (backToMainMenu == true);
+
     headerTerimakasih();
 
     return 0;
